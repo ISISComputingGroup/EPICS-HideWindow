@@ -8,18 +8,17 @@ include $(TOP)/configure/CONFIG
 #==================================================
 # build a support library
 
-PROD_HOST += HideWindow
-
-# xxxRecord.h will be created from xxxRecord.dbd
-#DBDINC += xxxRecord
-# install HideWindow.dbd into <top>/dbd
-#DBD += HideWindow.dbd
+PROD_HOST += HideWindow SetQuickEditMode
 
 # specify all source files to be compiled and added to the library
 HideWindow_SRCS += hidewindow.cc
+SetQuickEditMode_SRCS += SetQuickEditMode.cc
 
 HideWindow_LIBS += $(EPICS_BASE_HOST_LIBS)
 HideWindow_SYS_LIBS_WIN32 += kernel32 user32
+
+SetQuickEditMode_LIBS += $(EPICS_BASE_HOST_LIBS)
+SetQuickEditMode_SYS_LIBS_WIN32 += kernel32 user32
 
 #===========================
 
