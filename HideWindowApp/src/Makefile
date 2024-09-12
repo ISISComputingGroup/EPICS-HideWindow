@@ -9,11 +9,13 @@ include $(TOP)/configure/CONFIG
 # build a support library
 
 PROD_HOST += HideWindow SetQuickEditMode RunWithGlobalLock RunHidden
+PROD_HOST += SetWindowCloseButton
 
 # specify all source files to be compiled and added to the library
 HideWindow_SRCS += hidewindow.cc
 SetQuickEditMode_SRCS += SetQuickEditMode.cc
 RunWithGlobalLock_SRCS += RunWithGlobalLock.cc
+SetWindowCloseButton_SRCS += SetWindowCloseButton.cc
 RunHidden_SRCS += runhidden.cc
 
 HideWindow_LIBS += $(EPICS_BASE_HOST_LIBS)
@@ -27,6 +29,9 @@ RunWithGlobalLock_SYS_LIBS_WIN32 += kernel32 user32
 
 RunHidden_LDFLAGS_WIN32 += -subsystem:windows
 RunHidden_SYS_LIBS_WIN32 += kernel32 user32
+
+SetWindowCloseButton_LIBS += $(EPICS_BASE_HOST_LIBS)
+SetWindowCloseButton_SYS_LIBS_WIN32 += kernel32 user32
 
 #===========================
 
