@@ -45,7 +45,8 @@ int main(int argc, char* argv[])
 {
     if (argc < 4) {
         printf("usage: CheckFileAccess fileName access shareMode\n");
-        printf("access     can be \"\" (only file metadata access requested), \"R\", \"W\" or \"RW\"\n");
+        printf("access     can be \"\" (only file metadata access requested), \"A\" for all access\n");
+        printf("           or mix of \"R\", \"W\", \"E\" e.g. \"RW\"\n");
         printf("shareMode  can be \"\" (exclusive access, no sharing) or mix of R, W and D\n");
         printf("           e.g. \"RW\" for shared read and write\n");
         return -1;
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
         return -1;
     }
     LPCSTR lpFileName = argv[1];
-    DWORD dwDesiredAccess = 0;
+    DWORD dwDesiredAccess = 0; // file metadata query only
     if (argv[2] != NULL) {
         std::string am = argv[2];
         if (am.find("R") != std::string::npos) {
@@ -64,8 +65,14 @@ int main(int argc, char* argv[])
         if (am.find("W") != std::string::npos) {
             dwDesiredAccess |= GENERIC_WRITE;
         }
+        if (am.find("E") != std::string::npos) {
+            dwDesiredAccess |= GENERIC_EXECUTE;
+        }
+        if (am.find("A") != std::string::npos) {
+            dwDesiredAccess |= GENERIC_ALL;
+        }
     }
-    DWORD dwShareMode = 0;
+    DWORD dwShareMode = 0; // no file access sharing
     if (argv[3] != NULL) {
         std::string sm = argv[3];
         if (sm.find("R") != std::string::npos) {
